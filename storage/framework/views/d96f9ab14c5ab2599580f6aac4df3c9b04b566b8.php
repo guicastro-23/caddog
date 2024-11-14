@@ -1,13 +1,13 @@
-@extends('layouts.app')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <div class="section container">
     <div class="header-container">
         <br>
         <h4 class="inline">Itens do Cardápio</h4>
         <div class="class button-group">
             <a href="javascript:history.back()" class="btn-small waves-effect waves-light grey inline">Voltar</a>
-        <a href="{{ route('admin.itemCardapio.create') }}" class="btn-small waves-effect waves-light green inline">Adicionar</a>
+        <a href="<?php echo e(route('admin.itemCardapio.create')); ?>" class="btn-small waves-effect waves-light green inline">Adicionar</a>
         </div>
 
 
@@ -15,11 +15,11 @@
     <hr>
 
     <!-- Mensagem de sucesso, se houver -->
-    @if(session('success'))
+    <?php if(session('success')): ?>
         <div class="card-panel green lighten-4">
-            <span class="green-text">{{ session('success') }}</span>
+            <span class="green-text"><?php echo e(session('success')); ?></span>
         </div>
-    @endif
+    <?php endif; ?>
 
     <!-- Delete Confirmation Modal -->
     <div id="deleteModal" class="modal small-modal">
@@ -29,8 +29,8 @@
         </div>
         <div class="modal-footer">
             <form id="deleteForm" method="POST">
-                @csrf
-                @method('DELETE')
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('DELETE'); ?>
                 <button type="submit" class="modal-close btn red">Sim</button>
                 <a href="#!" class="modal-close btn grey">Cancelar</a>
             </form>
@@ -42,27 +42,27 @@
             <thead>
                 <tr>
                     <th>
-                        <a href="{{ route('admin.itemCardapio.index', ['sort' => 'nome', 'direction' => $direction === 'asc' ? 'desc' : 'asc']) }}" class="header-link">
+                        <a href="<?php echo e(route('admin.itemCardapio.index', ['sort' => 'nome', 'direction' => $direction === 'asc' ? 'desc' : 'asc'])); ?>" class="header-link">
                             Nome
-                            @if ($sort === 'nome')
-                                <i class="material-icons">{{ $direction === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down' }}</i>
-                            @endif
+                            <?php if($sort === 'nome'): ?>
+                                <i class="material-icons"><?php echo e($direction === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down'); ?></i>
+                            <?php endif; ?>
                         </a>
                     </th>
                     <th>
-                        <a href="{{ route('admin.itemCardapio.index', ['sort' => 'categoria_id', 'direction' => $direction === 'asc' ? 'desc' : 'asc']) }}" class="header-link">
+                        <a href="<?php echo e(route('admin.itemCardapio.index', ['sort' => 'categoria_id', 'direction' => $direction === 'asc' ? 'desc' : 'asc'])); ?>" class="header-link">
                             Categoria
-                            @if ($sort === 'categoria_id')
-                                <i class="material-icons">{{ $direction === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down' }}</i>
-                            @endif
+                            <?php if($sort === 'categoria_id'): ?>
+                                <i class="material-icons"><?php echo e($direction === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down'); ?></i>
+                            <?php endif; ?>
                         </a>
                     </th>
                     <th>
-                        <a href="{{ route('admin.itemCardapio.index', ['sort' => 'preco', 'direction' => $direction === 'asc' ? 'desc' : 'asc']) }}" class="header-link">
+                        <a href="<?php echo e(route('admin.itemCardapio.index', ['sort' => 'preco', 'direction' => $direction === 'asc' ? 'desc' : 'asc'])); ?>" class="header-link">
                             Preço
-                            @if ($sort === 'preco')
-                                <i class="material-icons">{{ $direction === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down' }}</i>
-                            @endif
+                            <?php if($sort === 'preco'): ?>
+                                <i class="material-icons"><?php echo e($direction === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down'); ?></i>
+                            <?php endif; ?>
                         </a>
                     </th>
                     <th>Foto</th>
@@ -70,33 +70,33 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($itemCardapio as $item)
+                <?php $__currentLoopData = $itemCardapio; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
-                        <td>{{ $item->nome }}</td>
-                        <td>{{ $item->categoria ? $item->categoria->nome : 'Sem Categoria' }}</td>
-                        <td>R$ {{ number_format($item->preco, 2, ',', '.') }}</td>
+                        <td><?php echo e($item->nome); ?></td>
+                        <td><?php echo e($item->categoria ? $item->categoria->nome : 'Sem Categoria'); ?></td>
+                        <td>R$ <?php echo e(number_format($item->preco, 2, ',', '.')); ?></td>
                         <td>
-                            @if($item->foto)
-                                <img src="{{ "/storage/$item->foto" }}" alt="{{ $item->nome }}" style="width: 100px; height: auto;">
-                            @else
+                            <?php if($item->foto): ?>
+                                <img src="<?php echo e("/storage/$item->foto"); ?>" alt="<?php echo e($item->nome); ?>" style="width: 100px; height: auto;">
+                            <?php else: ?>
                                 Sem Foto
-                            @endif
+                            <?php endif; ?>
                         </td>
                         <td>
-                            <a href="{{ route('admin.itemCardapio.show', $item->id) }}" class="btn blue btn-small">
+                            <a href="<?php echo e(route('admin.itemCardapio.show', $item->id)); ?>" class="btn blue btn-small">
                                 <i class="material-icons">remove_red_eye</i>
                             </a>
-                            <a href="{{ route('admin.itemCardapio.edit', $item->id) }}" class="btn green btn-small">
+                            <a href="<?php echo e(route('admin.itemCardapio.edit', $item->id)); ?>" class="btn green btn-small">
                                 <i class="material-icons">edit</i>
                             </a>
                             <button class="btn red btn-small modal-trigger" data-target="deleteModal"
-                                    data-url="{{ route('admin.itemCardapio.destroy', $item->id) }}"
-                                    data-name="{{ $item->nome }}">
+                                    data-url="<?php echo e(route('admin.itemCardapio.destroy', $item->id)); ?>"
+                                    data-name="<?php echo e($item->nome); ?>">
                                 <i class="material-icons">delete</i>
                             </button>
                         </td>
                     </tr>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </tbody>
         </table>
     </div>
@@ -225,4 +225,6 @@
         right: 30px;
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\guilh\best_imoveis\resources\views/admin/itemCardapio/index.blade.php ENDPATH**/ ?>
