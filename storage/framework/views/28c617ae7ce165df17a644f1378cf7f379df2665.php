@@ -1,6 +1,6 @@
-@extends('admin.layouts.principal')
 
-@section('conteudo-principal')
+
+<?php $__env->startSection('conteudo-principal'); ?>
 
     <style>
         .header-container {
@@ -60,7 +60,7 @@
     <div class="container">
 
         <div class="header-container">
-            <a href="{{ route('home.index') }}" class="waves-effect waves-light">
+            <a href="<?php echo e(route('home.index')); ?>" class="waves-effect waves-light">
                 <i class="material-icons black-text">arrow_back</i>
             </a>
             <h4 class="inline">Detalhes do Pedido</h4>
@@ -69,49 +69,49 @@
 
         <div class="card">
             <div class="card-image">
-                @if($itemCardapio->foto)
-                    <img src="{{ url("storage/{$itemCardapio->foto}") }}" alt="{{ $itemCardapio->nome }}">
-                @else
+                <?php if($itemCardapio->foto): ?>
+                    <img src="<?php echo e(url("storage/{$itemCardapio->foto}")); ?>" alt="<?php echo e($itemCardapio->nome); ?>">
+                <?php else: ?>
                     <img src="https://via.placeholder.com/300x150" alt="Sem Foto">
-                @endif
+                <?php endif; ?>
             </div>
             <div class="card-content">
-                <span class="card-title">{{ $itemCardapio->nome }}</span>
-                <p>R$ {{ number_format($itemCardapio->preco, 2, ',', '.') }}</p>
-                <p>{{ $itemCardapio->descricao }}</p>
+                <span class="card-title"><?php echo e($itemCardapio->nome); ?></span>
+                <p>R$ <?php echo e(number_format($itemCardapio->preco, 2, ',', '.')); ?></p>
+                <p><?php echo e($itemCardapio->descricao); ?></p>
             </div>
         </div>
 
-        <form action="{{ route('itemCardapio.salvarAdicionais', $itemCardapio) }}" method="POST" class="form-container">
-            @csrf
+        <form action="<?php echo e(route('cardapio.salvarAdicionais', $itemCardapio)); ?>" method="POST" class="form-container">
+            <?php echo csrf_field(); ?>
 
             <!-- Container para os adicionais -->
             <div class="adicionais-container">
-                @php
+                <?php
                 $adicionaisCount = count($adicionais); // Contando o total de adicionais
-            @endphp
+            ?>
             
             <!-- Exibindo primeiros 5 adicionais -->
-            @foreach(collect($adicionais)->slice(0, 5) as $adicional)
+            <?php $__currentLoopData = collect($adicionais)->slice(0, 5); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $adicional): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="input-field">
                     <label>
-                        <input type="checkbox" name="adicionais[]" value="{{ $adicional->id }}" />
-                        <span>{{ $adicional->nome }}</span>
+                        <input type="checkbox" name="adicionais[]" value="<?php echo e($adicional->id); ?>" />
+                        <span><?php echo e($adicional->nome); ?></span>
                     </label>
                 </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             
-            @if($adicionaisCount > 5)
+            <?php if($adicionaisCount > 5): ?>
                 <!-- Exibindo adicionais restantes a partir do 6º item -->
-                @foreach(collect($adicionais)->slice(5) as $adicional)
+                <?php $__currentLoopData = collect($adicionais)->slice(5); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $adicional): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="input-field">
                         <label>
-                            <input type="checkbox" name="adicionais[]" value="{{ $adicional->id }}" />
-                            <span>{{ $adicional->nome }}</span>
+                            <input type="checkbox" name="adicionais[]" value="<?php echo e($adicional->id); ?>" />
+                            <span><?php echo e($adicional->nome); ?></span>
                         </label>
                     </div>
-                @endforeach
-            @endif
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endif; ?>
             </div>
 
             <!-- Rodapé fixo com o botão 'Avançar' -->
@@ -124,4 +124,6 @@
         </form>
     </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layouts.principal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\guilh\best_imoveis\resources\views/admin/cardapio/product.blade.php ENDPATH**/ ?>

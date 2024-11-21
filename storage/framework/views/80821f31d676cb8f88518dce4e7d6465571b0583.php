@@ -1,44 +1,44 @@
-@extends('layouts.app')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
     <div class="section container">
         <div class="header-container">
             <br>
             <h4 class="inline">Adicionar Item ao Cardápio</h4>
-            <div class="class button-group"><a href="{{ route('admin.itemCardapio.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+            <div class="class button-group"><a href="<?php echo e(route('admin.cardapio.index')); ?>" class="btn-small waves-effect waves-light grey inline">Voltar</a>
             </div>
         </div>
         <hr>
 
         <!-- Mensagens de erro -->
-        @if($errors->any())
+        <?php if($errors->any()): ?>
             <span style="color: #ff0000">
-                @foreach ($errors->all() as $error)
-                    {{ $error }}<br>
-                @endforeach
+                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php echo e($error); ?><br>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </span>
             <br>
-        @endif
+        <?php endif; ?>
 
         <div class="section container">
-            <form action="{{ route('admin.itemCardapio.store') }}" method="POST" enctype="multipart/form-data" class="form-container">
-                @csrf
+            <form action="<?php echo e(route('admin.cardapio.store')); ?>" method="POST" enctype="multipart/form-data" class="form-container">
+                <?php echo csrf_field(); ?>
 
                 <div class="input-field">
                     <label for="nome">Nome do Item</label>
-                    <input type="text" id="nome" name="nome" value="{{ old('nome') }}">
+                    <input type="text" id="nome" name="nome" value="<?php echo e(old('nome')); ?>">
                 </div>
 
                 <div class="input-field">
                     <label for="preco">Preço</label>
-                    <input type="text" id="preco" name="preco" value="{{ old('preco') }}">
+                    <input type="text" id="preco" name="preco" value="<?php echo e(old('preco')); ?>">
                 </div>
 
                 <div class="input-field">
                     <label for="categoria_id"></label>
                     <select id="categoria_id" name="categoria_id">
-                        @foreach($categorias as $categoria)
-                            <option value="{{ $categoria->id }}">{{ $categoria->nome }}</option>
-                        @endforeach
+                        <?php $__currentLoopData = $categorias; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $categoria): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($categoria->id); ?>"><?php echo e($categoria->nome); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
                     <label>Categoria</label>
                 </div>
@@ -138,4 +138,6 @@
             right: 30px;
         }
     </style>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\guilh\best_imoveis\resources\views/admin/cardapio/create.blade.php ENDPATH**/ ?>

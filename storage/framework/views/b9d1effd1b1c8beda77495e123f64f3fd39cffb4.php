@@ -1,49 +1,50 @@
-@extends('layouts.app')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
     <div class="section container">
         <div class="header-container">
             <br>
             <h4 class="inline">Editar Item do Cardápio</h4>
             <div class="class button-group">
-                <a href="{{ route('admin.itemCardapio.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+                <a href="<?php echo e(route('admin.cardapio.index')); ?>" class="btn-small waves-effect waves-light grey inline">Voltar</a>
             </div>
 
         </div>
         <hr>
 
         <!-- Mensagens de erro -->
-        @if($errors->any())
+        <?php if($errors->any()): ?>
             <span style="color: #ff0000">
-                @foreach ($errors->all() as $error)
-                    {{ $error }}<br>
-                @endforeach
+                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php echo e($error); ?><br>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </span>
             <br>
-        @endif
+        <?php endif; ?>
 
         <div class="section container">
-            <form action="{{ route('admin.itemCardapio.update', $itemCardapio->id) }}" method="POST" enctype="multipart/form-data" class="form-container">
-                @csrf
-                @method('PUT')
+            <form action="<?php echo e(route('admin.cardapio.update', $itemCardapio->id)); ?>" method="POST" enctype="multipart/form-data" class="form-container">
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('PUT'); ?>
 
                 <div class="input-field">
                     <label for="nome">Nome do Item</label>
-                    <input type="text" id="nome" name="nome" value="{{ old('nome', $itemCardapio->nome) }}">
+                    <input type="text" id="nome" name="nome" value="<?php echo e(old('nome', $itemCardapio->nome)); ?>">
                 </div>
 
                 <div class="input-field">
                     <label for="preco">Preço</label>
-                    <input type="text" id="preco" name="preco" value="{{ old('preco', number_format($itemCardapio->preco, 2, ',', '.')) }}">
+                    <input type="text" id="preco" name="preco" value="<?php echo e(old('preco', number_format($itemCardapio->preco, 2, ',', '.'))); ?>">
                 </div>
 
                 <div class="input-field ">
                     <label for="categoria_id"></label>
                     <select id="categoria_id" name="categoria_id">
-                        @foreach($categorias as $categoria)
-                            <option value="{{ $categoria->id }}" {{ $categoria->id == $itemCardapio->categoria_id ? 'selected':''}}>
-                                {{ $categoria->nome }}
+                        <?php $__currentLoopData = $categorias; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $categoria): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($categoria->id); ?>" <?php echo e($categoria->id == $itemCardapio->categoria_id ? 'selected':''); ?>>
+                                <?php echo e($categoria->nome); ?>
+
                             </option>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
                     <label>Categoria</label>
 
@@ -57,12 +58,12 @@
                 </div>
 
                 <!-- Exibe a imagem atual, se houver -->
-                @if($itemCardapio->foto)
+                <?php if($itemCardapio->foto): ?>
                     <div style="margin-top: 15px;">
                         <p>Foto Atual:</p>
-                        <img src="{{ url('storage/'.$itemCardapio->foto) }}" alt="{{ $itemCardapio->nome }}" style="width: 100px; height: auto;">
+                        <img src="<?php echo e(url('storage/'.$itemCardapio->foto)); ?>" alt="<?php echo e($itemCardapio->nome); ?>" style="width: 100px; height: auto;">
                     </div>
-                @endif
+                <?php endif; ?>
 
                 <button type="submit" class="btn-small waves-effect waves-light">Salvar</button>
             </form>
@@ -177,4 +178,6 @@
 
 
     </style>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\guilh\best_imoveis\resources\views/admin/cardapio/edit.blade.php ENDPATH**/ ?>
