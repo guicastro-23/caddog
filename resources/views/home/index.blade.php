@@ -33,7 +33,7 @@
                     <div class="col s12 m6 l4">
                         <div class="card">
                             <div class="card-image">
-                                <a href="{{ route('itemCardapio.product', $item->id) }}">
+                                <a href="{{ route('cardapio.product', $item->id) }}">
                                     @if($item->foto)
                                         <img src="{{ url("storage/{$item->foto}") }}" alt="{{ $item->nome }}">
                                     @else

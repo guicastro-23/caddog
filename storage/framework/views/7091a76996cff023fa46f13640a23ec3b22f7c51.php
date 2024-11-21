@@ -61,7 +61,7 @@
 
         <ul id="dropdownCardapio" class="dropdown-content">
             <li><a href="<?php echo e(url('/admin/index-adicionais')); ?>">Adicionais</a></li>
-            <li><a href="<?php echo e(url('/admin/index-itemCardapio')); ?>">Cardápio</a></li>
+            <li><a href="<?php echo e(url('/admin/index-cardapio')); ?>">Cardápio</a></li>
             <li><a href="<?php echo e(url('/admin/index-categorias')); ?>">Categorias</a></li>
             <li><a href="<?php echo e(url('/admin/index-cliente')); ?>">Cliente</a></li>
             <li><a href="<?php echo e(url('/admin/dashboard/historico')); ?>">Histórico</a></li>
@@ -85,7 +85,7 @@
         <ul class="sidenav" id="mobile-demo">
             <?php if(auth()->guard()->check()): ?>
             <li><a href="<?php echo e(url('/admin/index-adicionais')); ?>">Adicionais</a></li>
-            <li><a href="<?php echo e(url('/admin/index-itemCardapio')); ?>">Cardápio</a></li>
+            <li><a href="<?php echo e(url('/admin/index-cardapio')); ?>">Cardápio</a></li>
             <li><a href="<?php echo e(url('/admin/index-categorias')); ?>">Categorias</a></li>
             <li><a href="<?php echo e(url('/admin/index-cliente')); ?>">Clientes</a></li>
             <li><a href="<?php echo e(url('/admin/dashboard/historico')); ?>">Histórico</a></li>

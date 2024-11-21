@@ -33,7 +33,7 @@
                     <div class="col s12 m6 l4">
                         <div class="card">
                             <div class="card-image">
-                                <a href="<?php echo e(route('itemCardapio.product', $item->id)); ?>">
+                                <a href="<?php echo e(route('cardapio.product', $item->id)); ?>">
                                     <?php if($item->foto): ?>
                                         <img src="<?php echo e(url("storage/{$item->foto}")); ?>" alt="<?php echo e($item->nome); ?>">
                                     <?php else: ?>
